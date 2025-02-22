@@ -2,6 +2,21 @@
 const clientId = '';
 const clientSecret ='';
 
+class queue {
+    constructor() {
+        this.items = [];
+    }
+    enqueue(cancion) {
+        this.items.push(cancion);
+    }
+    dequeue() {
+        return this.items.shift();
+    }
+    mostrar() {
+        return this.items;
+    }
+}
+
 class APIController {
     constructor() {
     }
@@ -32,7 +47,7 @@ class APIController {
         let tracks = track.items;
 
         for (let i = 0; i < tracks.length; i++) {
-            cola.push(tracks[i].name
+            cola.queue(tracks[i].name
             + ' by ' + tracks[i].artists.map(artist => artist.name).join(', '));
         }
         return cola;}
@@ -40,11 +55,11 @@ class APIController {
 }
 
 const api = new APIController();
-let cola = [];
+let cola = new queue();
 let token = await api.getToken();
  cola = await api.getTopTracks(token, cola);
 
 //REPRODUCCION DE LA COLA
 for (let i = 0; i < cola.length; i++) {
-    console.log('Reproduciendo: ' + cola.shift());
+    console.log('Reproduciendo: ' + cola.dequeue());
 } await api.getTopTracks(token, cola);
