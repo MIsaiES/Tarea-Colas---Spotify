@@ -47,7 +47,7 @@ class APIController {
         let tracks = track.items;
 
         for (let i = 0; i < tracks.length; i++) {
-            cola.queue(tracks[i].name
+            cola.enqueue(tracks[i].name
             + ' by ' + tracks[i].artists.map(artist => artist.name).join(', '));
         }
         return cola;}
